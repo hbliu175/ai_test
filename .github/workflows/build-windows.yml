@@ -2,6 +2,8 @@ name: Build Windows EXE
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
@@ -26,7 +28,7 @@ jobs:
 
     - name: Build EXE with PyInstaller
       run: |
-        pyinstaller ping_scanner.spec
+        pyinstaller --onefile --windowed --name PingScanner ping_scanner.py
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
