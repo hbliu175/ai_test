@@ -17,9 +17,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 def ping_host(ip, timeout=500):
     """Ping a single host, return (ip, is_alive, response_time_ms, hostname)."""
     try:
+        # CREATE_NO_WINDOW = 0x08000000 - hide console window on Windows
         result = subprocess.run(
             ['ping', '-n', '1', '-w', str(timeout), ip],
-            capture_output=True, text=True, timeout=3
+            capture_output=True, text=True, timeout=3,
+            creationflags=0x08000000
         )
         is_alive = result.returncode == 0
         response_time = None
